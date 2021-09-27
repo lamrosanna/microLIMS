@@ -1,0 +1,11 @@
+
+{% block content %}
+{% if barlist %}
+<h1>Located Breweries</h1>
+{% for bars, value in barlist.items %}
+    <h2>{{forloop.counter}}. {{ value.name }}</h2>
+{% endfor %}
+{%else%}
+<h2>No breweries found!</h2>
+    {% endif %}
+{% endblock %}
