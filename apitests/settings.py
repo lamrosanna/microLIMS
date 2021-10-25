@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apitest1', 
     'rest_framework',
-    'bootstrap5',
+    'test_methods',
 ]
 
 MIDDLEWARE = [
@@ -78,9 +78,13 @@ WSGI_APPLICATION = 'apitests.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'eipndqgg',
+        'USER': 'eipndqgg',
+        'PASSWORD':'Wc9Bj5q5i7cjHoFOH7x4HqgHTPEsxtGT',
+        'HOST': 'kashin.db.elephantsql.com',
+        'PORT': '',
+}
 }
 
 
@@ -121,7 +125,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
+STATICFILES_DIRS= [
+    BASE_DIR / "static",
+    'css/',
+]
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset = "utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <div class ="container-fluid">
+            <div class ="row">
+                <div class = "col p-3">
+                    <h1>Add new Test</h1>
+                    <form action="/add_test/" method="POST" >
+                        {% csrf_token %}
+                        <table>
+                        {{ test.as_table }}
+                        </table>
+                        <input type="submit" value="Add Test Methods">
+                    </form>
+                </div>
+                <div class = "col p-3">
+                    <h1> Tests</h1>
+                    {%  for x in listed_tests %}
+                        <li>{{x.test_code}}</li>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

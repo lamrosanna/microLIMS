@@ -15,9 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from apitest1 import views
+from apitest1 import views as co
+from test_methods import views as testd
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home, name='index'),
+    path('', co.home, name='index'),
+    path('add_company/', co.add_company, name='add_company'),
+    path('viewcompany/',co.viewcompany, name ='viewcompany'),
+    path('viewcompany/<int:company_id>/',co.viewcompany_company, name ='viewcompany_company'),
+    path('add_test/', testd.add_test, name='add_test'),
+    
 ]
