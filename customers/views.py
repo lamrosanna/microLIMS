@@ -28,9 +28,8 @@ def add_company(request):
 
 def viewcompany(request):
     companydetails = company.objects.all()
-    #print (companydetails)
     context={ 'companydetails':companydetails }
-    return render(request, 'view_company.html',{ 'companydetails':companydetails })
+    return render(request, 'view_company.html',context)
 
 def viewcompany_company(request, company_id):
     comp = company.objects.all()

@@ -5,7 +5,7 @@ import requests
 from .models import test, testdetailsForm
 # Create your views here.
 def home(request):
-        return render(request, 'test_methods/view_tests.html',{
+        return render(request, 'view_tests.html',{
     })
 def add_test(request):
     if request.method == 'POST': 
@@ -15,4 +15,4 @@ def add_test(request):
     form=testdetailsForm()
     test_detail=test.objects.all()
     context = {'test':form,'listed_tests': test_detail}
-    return render(request, 'test_methods/addTest.html',context)
+    return render(request, 'add_tests.html',context)

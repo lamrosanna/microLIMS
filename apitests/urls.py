@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from customers import views as customers
 from test_methods import views as testd
+from users import views as users
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,5 +26,6 @@ urlpatterns = [
     path('viewcompany/',customers.viewcompany, name ='viewcompany'),
     path('viewcompany/<int:company_id>/',customers.viewcompany_company, name ='viewcompany_company'),
     path('add_test/', testd.add_test, name='add_test'),
+    path('add_user/', users.add_user, name="add_user")
     
 ]

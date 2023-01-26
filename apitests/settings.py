@@ -9,9 +9,13 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+from dotenv import load_dotenv
 from pathlib import Path
+
 import os
+
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-qvuoko56k(bipr3s3=j*spxevfr09nz41&d2#b6z^8p#9$zcal'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -80,9 +84,9 @@ WSGI_APPLICATION = 'apitests.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'eipndqgg',
-        'USER': 'eipndqgg',
-        'PASSWORD':'Wc9Bj5q5i7cjHoFOH7x4HqgHTPEsxtGT',
+        'NAME': os.getenv('db_name'),
+        'USER': os.getenv('db_name'),
+        'PASSWORD':os.getenv('db_pass'),
         'HOST': 'kashin.db.elephantsql.com',
         'PORT': '',
 }
@@ -128,7 +132,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS= [
     BASE_DIR / "static",
-    'css/',
 ]
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
