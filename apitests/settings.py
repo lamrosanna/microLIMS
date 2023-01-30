@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'customers',
     'test_methods',
     'users',
+    'projects',
+    'samples',
     'rest_framework',
 ]
 
