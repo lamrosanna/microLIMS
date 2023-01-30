@@ -51,6 +51,7 @@ coverage.xml
 # Environments 
 .env 
 .venv 
+venv/
 
 # Visual Studio Code # 
 .vscode/* 

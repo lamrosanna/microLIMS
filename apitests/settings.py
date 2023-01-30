@@ -87,7 +87,7 @@ DATABASES = {
         'NAME': os.getenv('db_name'),
         'USER': os.getenv('db_name'),
         'PASSWORD':os.getenv('db_pass'),
-        'HOST': 'kashin.db.elephantsql.com',
+        'HOST': 'heffalump.db.elephantsql.com',
         'PORT': '',
 }
 }
