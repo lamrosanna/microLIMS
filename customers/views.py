@@ -1,10 +1,14 @@
 from django.shortcuts import render
 from django.template import context
 from pprint import pprint
+from django.core import serializers
+from django.http import HttpResponse, JsonResponse
 import requests
+
 from .models import company, companyForm
 
 
+ERROR_INSERTING = "An error occured while inserting the item."
 
 # Create your views here.
 def home(request):
@@ -14,9 +18,10 @@ def add_company(request):
         if request.method == 'POST':
             form = companyForm(request.POST)
             if form.is_valid():
-                print("success")
+                # perform check to see if another company already has the same name
                 form.save()
-                
+                #return JsonResponse({"message":"New company information saved successfully"}, status=202)
+            #return{"message":ERROR_INSERTING}, 400
         else:
             print("testing")
         form=companyForm()
