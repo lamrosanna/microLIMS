@@ -22,8 +22,6 @@ def add_company(request):
                 form.save()
                 #return JsonResponse({"message":"New company information saved successfully"}, status=202)
             #return{"message":ERROR_INSERTING}, 400
-        else:
-            print("testing")
         form=companyForm()
         x = company.objects.all()
         return render(request, 'add_company.html',{
@@ -37,6 +35,6 @@ def viewcompany(request):
     return render(request, 'view_company.html',context)
 
 def viewcompany_company(request, company_id):
-    comp = company.objects.all()
-    context={'viewall':comp}
-    return render(request, 'customers/view_company.html',context)   
+    companydetails = company.get_byid(company_id)
+    context={'companydetails':companydetails}
+    return render(request, 'view_company.html',context)   

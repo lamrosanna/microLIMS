@@ -1,31 +1,29 @@
-<!DOCTYPE html>
-<html lang='en'>
-    <head>
-        <meta charset = "utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        {% load static %}
-        <link rel= "stylesheet" href="{% static 'css/index.css' %}">
-    </head>
-    <body>
-        <div class ="container-fluid">
-            <div class ="row">
-                <div class = "col p-3">
-                    <h1>Add new Customer</h1>
-                    <form action="/add_company/" method="POST" >
-                        {% csrf_token %}
-                        <table>
-                        {{ form.as_table }}
-                        </table>
-                        <input type="submit" value="Add Customer">
-                    </form>
-                </div>
-                <div class = "col">
-                    {% for name, value in companies.get_fields %}
-                        {{ name }}: {{ value }}
-                    {%endfor%}
-                </div>
-                <div class = "col"></div>
-            </div>
+{% extends "base.html" %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'index/style.css' %}">
+
+
+{% block content %}
+    <div class ="form-container">
+        <div class = "formcol">
+            <h1>Add new Customer</h1>
+            <form class="displayform" action="/add_company/" method="POST" >
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
+                <input class="displayform-submit"type="submit" value="Add Customer">    
+            </form>
         </div>
-    </body>
-</html>
+        <div class = "formcol">
+            {% if companies%}
+                <h1> List of Companies</h1>
+                {% for each in companies %}
+                    <h3>{{ each.company_name }}</h3><br>   
+                {% endfor %}
+            {% else %}
+                <h3>No companies have been created! </h3>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}

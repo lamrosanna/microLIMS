@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'index/style.css' %}">
+
+{% block content %}
+    <div class ="form-container">
+        {% if project %}
+        <div class = "formcol">
+            <h3>{{project.project_name}}</h3>
+            {% if sample %}
+                {% for samples in sample %}
+                <h4>{{samples.sample_name}}</h4>
+                <ul>
+                    <p>{{samples.sample_description}}</p>
+                    {% if samples.analysis.count > 0 %}
+                    {% for analysis in samples.analysis.all %}
+                        <li>{{analysis}}</li>
+                    {% endfor %}
+                    {% endif %}
+
+                </ul>
+                {% endfor %}
+            {% else %}
+                <h4>No Samples have been created for this project</h4>
+            {% endif %}
+        </div>
+        <div class = "formcol">
+            <h1>Add new Sample</h1>
+            <form class="displayform" action="{% url 'add_sample' project.id %}" method="POST" >
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
+                <input type="submit" value="Add sample">
+            </form>
+        </div>
+        {% endif %}
+    </div>
+{% endblock content %}

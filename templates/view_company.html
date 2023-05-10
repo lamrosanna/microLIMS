@@ -1,31 +1,24 @@
-<!DOCTYPE html>
-<html lang='en'>
-    <head>
-        <meta charset = "utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        {% load static %}
-        <link rel= "stylesheet" href="{% static 'css/index.css' %}">
-    </head>
-    <body>
-        <div class ="container-fluid">
-            <div class ="row">
-                <div class = "col p-3">
+{% extends "index.html" %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'index/style.css' %}">
+
+
+{% block content%}
+            <div class ="company-container">
+                <div class = "companycol">
                     <h1>Company List</h1><br>
                     {% for x in companydetails %}
                         {{ x.company_name }}  <br>
                     {% endfor %}
                 </div>
-                <div class = "col"></div>
-                <div class = "col">
-
-                    {% for name in companydetails %}
+                <div class = "companycol">
+                        {% for name in companydetails %}
                         {% for x, y in name.get_fields %}
                             {{ x }}: {{y}} <br>
                         {% endfor%}    
                     {% endfor %}
-
                 </div>
             </div>
-        </div>
-    </body>
-</html>
+{% endblock content%}
+

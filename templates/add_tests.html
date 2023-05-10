@@ -1,29 +1,28 @@
-<!DOCTYPE html>
-<html lang='en'>
-    <head>
-        <meta charset = "utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-    </head>
-    <body>
-        <div class ="container-fluid">
-            <div class ="row">
-                <div class = "col p-3">
-                    <h1>Add new Test</h1>
-                    <form action="/add_test/" method="POST" >
-                        {% csrf_token %}
-                        <table>
-                        {{ test.as_table }}
-                        </table>
-                        <input type="submit" value="Add Test Methods">
-                    </form>
-                </div>
-                <div class = "col p-3">
-                    <h1> Tests</h1>
-                    {%  for x in listed_tests %}
-                        <li>{{x.test_code}}</li>
-                    {% endfor %}
-                </div>
-            </div>
+{% extends "base.html" %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'index/style.css' %}">
+{% block content%}
+    <div class ="form-container">
+        <div class = "formcol">
+            <h1>Add new Test Methods for Analysis</h1>
+            <form class="displayform" action="/add_test/" method="POST" >
+                {% csrf_token %}
+                <table>
+                    {{ test.as_table }}
+                </table>
+                <input class="displayform-submit" type="submit" value="Add Test Method">
+            </form>
         </div>
-    </body>
-</html>
+        <div class = "formcol">
+            <h1> Tests</h1>
+            {% if listed_tests %}
+                <h2>Test methods for analysis</h2>
+                {%  for x in listed_tests %}
+                     <li>{{x.test_code}}</li>
+                {% endfor %}
+            {% else %}
+                <h2>There are no test methods saved.</h2>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}

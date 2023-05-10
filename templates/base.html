@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <title>µLIMS</title>
+        <meta charset = "utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'index/style.css' %}">
+    </head>
+    <body>
+        <div class="body-container">
+            <header id="main-header">
+                <div class="header-container">
+                    <a href="/"><img src="../static/css/images/logo.png" id=logo alt="Logo Image"></a>
+                </div>
+            </header>
+            <div id="navbar-container">
+                <div class="navbar-item">
+                    <a href="">Company</a>
+                        <ul class="dropdown">
+                            <li><a href="{% url 'viewcompany' %}">View My Companies</a></li>
+                            <li><a href="{% url 'add_user' %}">Add new User</a></li>
+                        </ul>
+                </div>
+                <div class="navbar-item">        
+                    <a href="">Test Methods</a>
+                        <ul class="dropdown">
+                            <li><a href="{% url 'add_test' %}">Add new test method</a></li>
+                        </ul>    
+                </div>
+                <div class="navbar-item"> 
+                    <a href="">Projects</a>
+                        <ul class="dropdown">
+                            <li><a href="{% url 'add_project' %}">Add new Project</a></li>
+                            <li><a href="{% url 'view_allproject' %}">All Projects</a></li>
+                        </ul>
+                </div>
+                <div class="navbar-item"> 
+                    <a href="">Sign Out</a>
+                </div>
+            </div>
+            <div class ="container">
+                {% block content %}
+                {% endblock content%}
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'index/style.css' %}">
+
+{% block content %}
+        <div class ="project-container">
+            <h1>Add new Project</h1>
+            <form class="projectform" action="/add_project/" method="POST" >
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
+                <input type="submit" value="Add Project">
+            </form>
+        </div>
+{% endblock content %}

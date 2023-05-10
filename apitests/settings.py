@@ -15,6 +15,9 @@ from pathlib import Path
 import os
 
 load_dotenv()
+db_name = os.getenv('db_name')
+db_pass = os.getenv('db_pass')
+db_host = os.getenv('db_host')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,13 +44,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    
     'customers',
     'test_methods',
-    'users',
     'projects',
     'samples',
     'rest_framework',
+    'users',
 ]
+
+AUTH_USER_MODEL = "users.LIMSuser"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -85,13 +92,18 @@ WSGI_APPLICATION = 'apitests.wsgi.application'
 
 DATABASES = {
     'default': {
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': 'rosannaslocaldb'
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('db_name'),
-        'USER': os.getenv('db_name'),
-        'PASSWORD':os.getenv('db_pass'),
-        'HOST': 'heffalump.db.elephantsql.com',
+        'NAME': db_name,
+        'USER': db_name,
+        'PASSWORD':db_pass,
+        'HOST': db_host,
         'PORT': '',
-}
+        'TEST': {
+            'ENGINE': 'django.db.backends.sqlite3',
+        },
+    }
 }
 
 
@@ -114,6 +126,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -131,7 +145,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 STATICFILES_DIRS= [
     BASE_DIR / "static",
 ]

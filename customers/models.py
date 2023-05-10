@@ -2,11 +2,13 @@ from django.db import models
 from django.db.models.enums import Choices
 from django.forms import ModelForm
 from django.core.validators import RegexValidator
+from django.shortcuts import get_object_or_404
 
 # Create your models here.
 class company(models.Model):
+    id = models.BigAutoField(primary_key=True)
     company_name = models.CharField(max_length=100)
-    customer_contact = models.CharField(max_length=20)
+    customer_contact = models.CharField(max_length=200)
     address = models.CharField(max_length = 100)
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=2)
@@ -26,12 +28,16 @@ class company(models.Model):
     )
     class Meta:
         app_label='customers'
-    def __str__(self):
+    def __str__(self) -> str:
         return self.company_name
     
-    def get_fields(self):
+    def get_fields(self) -> list:
         return[(field.name, field.value_to_string(self)) for field in company._meta.fields]
 
+    @classmethod
+    def get_byid(cls, id) -> object:
+        return get_object_or_404(cls, id=id)
+    
 class companyForm(ModelForm):
     class Meta:
         model = company

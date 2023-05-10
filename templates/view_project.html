@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content%}
+    <div class="project-list">
+        {% if project %}
+        {% for name, value in project.get_fields %}
+        {% if value %}
+          <li>{{ name }}: {{ value }}</li>
+        {% endif %}
+      {% endfor %}
+      <h2>{{project.id}}</h2>
+      <a href="{% url 'add_sample' project.id %}">Add Sample</a>
+        {% else %}
+            <h3>No project found!</h3>
+        {% endif %}
+    </div>
+{% endblock content%}

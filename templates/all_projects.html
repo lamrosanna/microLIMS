@@ -4,7 +4,7 @@
     <div class="project-list">
         {% if project %}
             {% for projects in project %}
-                <li>{{projects.project_name}}</li>
+                <li><a href="{% url 'view_project' projects.id %}"> {{projects.project_name}}</a></li>
             {% endfor %}
         {% else %}
             <h3>There are no projects. Please create a project to start.</h3>

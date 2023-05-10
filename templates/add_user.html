@@ -1,29 +1,19 @@
-<!DOCTYPE html>
-<html lang='en'>
-    <head>
-        <meta charset = "utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-    </head>
-    <body>
-        <div class ="container-fluid">
-            <div class ="row">
-                <div class = "col p-3">
-                    <h1>Add new User</h1>
-                    <form action="/add_user/" method="POST" >
+{% extends "base.html" %}
+
+{% block content %}
+        <div class ="form-container">
+            <div class = "formcol">
+                <h1>Current Users in Company</h1>
+            </div>
+            <div class = "formcol">
+                <h1>Add new User</h1>
+                    <form class="displayform" action="/add_user/" method="POST" >
                         {% csrf_token %}
                         <table>
-                        {{ user_form }}
+                        {{ form }}
                         </table>
                         <input type="submit" value="Add New User">
                     </form>
-                </div>
-                <div class = "col p-3">
-                    <h1> Tests</h1>
-                    {%  for x in listed_tests %}
-                        <li>{{x.test_code}}</li>
-                    {% endfor %}
-                </div>
             </div>
         </div>
-    </body>
-</html>
+{% endblock content %}
