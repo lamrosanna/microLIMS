@@ -55,6 +55,9 @@ INSTALLED_APPS = [
 ]
 
 AUTH_USER_MODEL = "users.LIMSuser"
+LOGIN_URL='login/'
+LOGIN_REDIRECT_URL = 'index'
+LOGOUT_REDIRECT_URL='logout/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

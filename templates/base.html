@@ -16,11 +16,13 @@
             </header>
             <div id="navbar-container">
                 <div class="navbar-item">
+                    {% if user %}
                     <a href="">Company</a>
                         <ul class="dropdown">
-                            <li><a href="{% url 'viewcompany' %}">View My Companies</a></li>
+                            <li><a href="{% url 'viewcompany_company' user.company.id %}">View My Companies</a></li>
                             <li><a href="{% url 'add_user' %}">Add new User</a></li>
                         </ul>
+                    {% endif %}    
                 </div>
                 <div class="navbar-item">        
                     <a href="">Test Methods</a>
@@ -36,7 +38,7 @@
                         </ul>
                 </div>
                 <div class="navbar-item"> 
-                    <a href="">Sign Out</a>
+                    <a href="{%url 'logout' %}">Sign Out</a>
                 </div>
             </div>
             <div class ="container">

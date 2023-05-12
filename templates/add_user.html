@@ -10,7 +10,7 @@
                     <form class="displayform" action="/add_user/" method="POST" >
                         {% csrf_token %}
                         <table>
-                        {{ form }}
+                        {{ form.as_table }}
                         </table>
                         <input type="submit" value="Add New User">
                     </form>

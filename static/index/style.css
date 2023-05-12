@@ -98,5 +98,31 @@ h1, h3{
 }
 .project-container{
     margin:0 auto;
-
+}
+.login-base-container{
+    width: 88%;
+    display: flex;
+    text-align: center;
+    margin-left: 6%;
+    margin-right: 6%;
+}
+.login-form{
+    width: 50%;
+    height: auto;
+    text-align: right;
+    margin-right: auto;
+    margin-left: auto;
+}
+.login-table{
+    margin:auto;
+    padding-bottom:10px;
+}
+.login-btn{
+    width:75%;
+    margin-right:auto;
+    margin-left:auto;
+    
+}
+.logout-container{
+    display: block;
 }

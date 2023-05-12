@@ -60,3 +60,6 @@ venv/
 !.vscode/launch.json 
 !.vscode/extensions.json 
 .history
+
+# my local stuff
+rosannaslocaldb

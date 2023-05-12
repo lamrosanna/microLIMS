@@ -3,6 +3,7 @@ import datetime
 from customers.models import company # needed to generate project
 from projects.models import projects # needed to generate samples
 from samples.models import samples #samples
+from users.models import LIMSuser
 from test_methods.models import test
 
 class SamplesTestCase(TestCase):
@@ -58,14 +59,18 @@ class SamplesTestCase(TestCase):
         sample.save()
         samplelist = [sample]
         project.project_samples.set(samplelist)
+        testcompany = company.objects.get(company_name="Test Company 1")
+        user = LIMSuser.objects.create_user(email="normal@user.com", password="foo", company_id=testcompany.id)
+        user.save()
     def test_startTesting(self):
 
-        project1 = projects.objects.get(project_name="Test Project Name")
+        
         # self.assertEqual(project1.project_po, "92308")
 
         # sample2 = samples.get_byid(1)
         # sample3 = sample2.get_allanalysis()
         # #testing = sample2.is_testingfinished()
         # self.assertEqual(sample3, False)
-        project2 = project1.project_samples.all()
-        self.assertEqual(project2, None)
+        User = LIMSuser.objects.get(email="normal@user.com")
+        company=User.company.id
+        self.assertEqual(company, None)

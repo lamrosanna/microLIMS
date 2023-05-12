@@ -1,23 +1,19 @@
 {% extends "index.html" %}
 
-{% load static %}
-<link rel="stylesheet" href="{% static 'index/style.css' %}">
-
-
 {% block content%}
             <div class ="company-container">
                 <div class = "companycol">
-                    <h1>Company List</h1><br>
-                    {% for x in companydetails %}
-                        {{ x.company_name }}  <br>
-                    {% endfor %}
+                    {% if companydetails %}
+                        <h1>{{companydetails.company_name}}</h1>
+                        <li>Primary contact: {{companydetails.customer_contact}}</li>
+                        <li>Address: {{companydetails.address}}, {{companydetails.city}} {{companydetails.state}}</li>
+                        <li>Phone: {{companydetails.phone}}</li>
+                    {% else %}
+                        <h1>You are not assigned to a company</h1>
+                    {% endif %}
                 </div>
                 <div class = "companycol">
-                        {% for name in companydetails %}
-                        {% for x, y in name.get_fields %}
-                            {{ x }}: {{y}} <br>
-                        {% endfor%}    
-                    {% endfor %}
+
                 </div>
             </div>
 {% endblock content%}

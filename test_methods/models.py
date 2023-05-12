@@ -19,7 +19,7 @@ class test(models.Model):
     test_TAT= models.IntegerField()
     completed = models.BooleanField(default=False)
     def __str__(self) -> str:
-        return self.test_name
+        return self.test_name, self.test_code, self.testMethod, self.test_type
     def get_fields(self) -> list:
         return[(field.name, field.value_to_string(self)) for field in test._meta.fields]
     

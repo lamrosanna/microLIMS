@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path, reverse, include
-
+from django.contrib.auth import views as auth_views
 
 from customers import views as customers
 from test_methods import views as testd
@@ -31,6 +31,8 @@ projectpatterns=[
 ]
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('login/',users.LoginView, name='login'),
+    path('logout/', users.LogoutView, name='logout'),
     path('', projects.home, name='index'),
     path('add_company/', customers.add_company, name='add_company'),
     path('viewcompany/',customers.viewcompany, name ='viewcompany'),

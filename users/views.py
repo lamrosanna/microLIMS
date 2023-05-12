@@ -1,8 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib import messages
 from .forms import LIMSuserForm
+from .models import LIMSuser
 
-UNSUCCESSFUL_SIGNIN="Your log-in attempt was unsuccessul. Please try again."
+INVALID_LOGIN="Email/password was not recognized."
+AUTHENTICATION_FAILED="Email/password was not authenticated"
+
 
 def add_user(request):
     if request.method == 'POST':
@@ -13,16 +18,26 @@ def add_user(request):
     context = {'form': form}
     return render(request, 'add_user.html',context)
 
-def authenticate_view(request):
-    email = request.POST['email']
-    password = request.POST['password']
-    user = authenticate(request, email=email, password=password)
-    if user is not None:
-        login(request, user)
-        # successful login
-    else:
-        
-        return{"message":UNSUCCESSFUL_SIGNIN}
+def LoginView(request):
+    if request.method == 'POST':
+        form=AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(email=username, password=password)
+            if user is not None:
+                login(request, user)
+                Limsuser = LIMSuser.objects.get(email=username)
+                return redirect('/', user=Limsuser)
+            else:
+                messages.error(request, INVALID_LOGIN)
+        else:
+            print('2')
+            messages.error(request, AUTHENTICATION_FAILED)   
+    form=AuthenticationForm()
+    #context={"login_form":form }
+    return render(request, 'registration/login.html', context={"login_form":form })
 
-def logout_view(request):
+def LogoutView(request):
     logout(request)
+    return render(request, 'registration/logout.html')

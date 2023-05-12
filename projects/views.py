@@ -1,10 +1,12 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from pprint import pprint
 
 from .models import projectForm, projects
 from samples.models import samples
 
 # Change to unfinished projects
+@login_required
 def home(request):
     project = projects.objects.all()
     context={"project":project}

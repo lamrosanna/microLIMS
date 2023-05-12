@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.template import context
 from pprint import pprint
-from django.core import serializers
+from django.contrib import messages
 from django.http import HttpResponse, JsonResponse
 import requests
 
@@ -10,10 +10,7 @@ from .models import company, companyForm
 
 ERROR_INSERTING = "An error occured while inserting the item."
 
-# Create your views here.
-def home(request):
-    return render(request, 'index.html',{})
-
+# only admin should have permission to create company
 def add_company(request):
         if request.method == 'POST':
             form = companyForm(request.POST)
@@ -28,7 +25,7 @@ def add_company(request):
             'form':form,
             'companies':x
     })
-
+# only admin should have permission to view all company
 def viewcompany(request):
     companydetails = company.objects.all()
     context={ 'companydetails':companydetails }
