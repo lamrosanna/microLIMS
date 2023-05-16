@@ -5,24 +5,13 @@
     <div class ="form-container">
         <div class = "formcol">
             <h1>Add new Test Methods for Analysis</h1>
-            <form class="displayform" action="/add_test/" method="POST" >
+            <form class="displayform" action="{% url 'add_test' company.id %}" method="POST" >
                 {% csrf_token %}
                 <table>
                     {{ test.as_table }}
                 </table>
                 <input class="displayform-submit" type="submit" value="Add Test Method">
             </form>
-        </div>
-        <div class = "formcol">
-            <h1> Tests</h1>
-            {% if listed_tests %}
-                <h2>Test methods for analysis</h2>
-                {%  for x in listed_tests %}
-                     <li>{{x.test_code}}</li>
-                {% endfor %}
-            {% else %}
-                <h2>There are no test methods saved.</h2>
-            {% endif %}
         </div>
     </div>
 {% endblock content %}

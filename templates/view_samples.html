@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'index/style.css' %}">
+
+{% block content %}
+    <div class ="form-container">
+        {% if project %}
+        <div class = "formcol">
+            {% if messages %}
+                {% for message in messages %}
+                    {{message}}
+                {% endfor %}
+            {% endif %}
+            <h3>{{project.project_name}}</h3>
+            {% if samples %}
+                {% for sample in samples %}
+                <h4><a href='{% url "modify_sample" sample_id=sample.id project_id=project.id %}'>{{sample.sample_name}}</a></h4>
+                <ul>
+                    <p>{{sample.sample_description}}</p>
+                    {% for analysis in sample.analysis.all %}
+                        <li>{{analysis}}</li>
+                        <li><a href="{% url 'delete_sample' sample_id=sample.id project_id=sample.sample_project.id %}">Delete {{sample.sample_name}}</a></li>
+                    {% endfor %}
+                </ul>
+                {% endfor %}
+            {% else %}
+                <h4>No Samples have been created for this project</h4>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+{% endblock content %}

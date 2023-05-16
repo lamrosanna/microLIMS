@@ -3,14 +3,17 @@
 <link rel="stylesheet" href="{% static 'index/style.css' %}">
 
 {% block content %}
-        <div class ="project-container">
-            <h1>Add new Project</h1>
-            <form class="projectform" action="{% url 'add_project' company.id %}" method="POST" >
+    <div class ="form-container">
+        <div class = "formcol">
+            <h1>Modify sample</h1>
+            <form class="displayform" action="{% url 'modify_sample' sample_id=sample.id project_id=project.id %}" method="POST">
                 {% csrf_token %}
                 <table>
                     {{ form.as_table }}
                 </table>
-                <input type="submit" value="Add Project">
+                <input type="submit" value="Save Sample">
             </form>
         </div>
+
+    </div>
 {% endblock content %}

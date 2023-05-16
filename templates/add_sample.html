@@ -5,11 +5,16 @@
 {% block content %}
     <div class ="form-container">
         {% if project %}
+            {% if messages %}
+                {% for message in messages %}
+                    {{message}}
+                {% endfor %}
+            {% endif %}
         <div class = "formcol">
             <h3>{{project.project_name}}</h3>
             {% if sample %}
                 {% for samples in sample %}
-                <h4>{{samples.sample_name}}</h4>
+                <h4><a href='{% url "modify_sample" sample_id=samples.id project_id=samples.sample_project.id%}'>{{samples.sample_name}}</a></h4>
                 <ul>
                     <p>{{samples.sample_description}}</p>
                     {% if samples.analysis.count > 0 %}

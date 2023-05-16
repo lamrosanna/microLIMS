@@ -18,16 +18,28 @@ from django.urls import path, re_path, reverse, include
 from django.contrib.auth import views as auth_views
 
 from customers import views as customers
-from test_methods import views as testd
+from test_methods import views as test
 from users import views as users
 from projects import views as projects
 from samples import views as samples
 
 projectpatterns=[
-    path("", projects.view_allproject, name="view_allproject"),
-    path('add_project/', projects.add_project, name="add_project"),
-    re_path(r'^(?P<project_id>[0-9])/$',projects.view_project, name="view_project"),
-    re_path(r'^(?P<project_id>[0-9])/add_sample/', samples.add_sample, name="add_sample"),
+    path('', projects.all_activeprojects, name="all_activeprojects"),
+    path('<int:project_id>/',projects.view_project, name="view_project"),
+    path('<int:project_id>/modify/', projects.modify_project, name='modify_project'),
+    path('<int:project_id>/delete/', projects.delete_project, name='delete_project'),
+    path('<int:project_id>/add_sample/', samples.add_sample, name="add_sample"),
+    path('<int:project_id>/samples/<int:sample_id>/modify/', samples.modify_sample, name="modify_sample"),
+    path('<int:project_id>/samples/<int:sample_id>/delete/', samples.delete_sample, name="delete_sample"),
+]
+companypatterns=[
+    path('<int:company_id>/', customers.viewcompany_company, name ='viewcompany_company'),
+    path('<int:company_id>/modify/', customers.modify_company, name ='modify_company'),
+    path('<int:company_id>/delete/', customers.inactivate_company, name ='inactivate_company'),
+    path('<int:company_id>/add_user/',users.add_user, name="add_user"),
+    path('<int:company_id>/user/<int:user_id>/modify/',users.modify_user, name="modify_user"),
+    path('<int:company_id>/add_project/', projects.add_project, name="add_project"),
+    path('<int:company_id>/projects/', projects.view_allproject, name='view_allproject'),
 ]
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,8 +48,7 @@ urlpatterns = [
     path('', projects.home, name='index'),
     path('add_company/', customers.add_company, name='add_company'),
     path('viewcompany/',customers.viewcompany, name ='viewcompany'),
-    path('viewcompany/<int:company_id>/',customers.viewcompany_company, name ='viewcompany_company'),
-    path('add_test/', testd.add_test, name='add_test'),
-    path('add_user/', users.add_user, name="add_user"),
+    path('company/', include(companypatterns)),
     path('projects/', include(projectpatterns)),
+    path('tests/', test.view_test, name='view_test'),
 ]

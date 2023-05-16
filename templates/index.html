@@ -3,9 +3,22 @@
 {% block content%}
     <div class="project-list">
         {% if project %}
+        <table>
+            <tr>
+                <th>Project Name</th>
+                <th>Project PO</th>
+                <th>Date Submitted</th>
+                <th>Status</th>
+            </tr>
             {% for projects in project %}
-                <li>{{projects.project_name}}</li>
+            <tr>
+                <td><a href="{% url 'view_project' projects.id%}">{{projects.project_name}}</a></td>
+                <td>{{projects.project_po}}</td>
+                <td>{{projects.date_submitted}}</td>
+                <td>{{projects.get_status}}</td>
+            </tr>    
             {% endfor %}
+        </table>
         {% else %}
             <h3>There are no projects. Please create a project to start.</h3>
         {% endif %}

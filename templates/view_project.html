@@ -1,17 +1,47 @@
 {% extends "base.html" %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'index/style.css' %}">
 
 {% block content%}
     <div class="project-list">
         {% if project %}
-        {% for name, value in project.get_fields %}
-        {% if value %}
-          <li>{{ name }}: {{ value }}</li>
+        {% if messages %}
+        {% for message in messages %}
+            {{message}}
+        {% endfor %}
+    {% endif %}
+        <div>
+          <a href="{% url 'modify_project' project.id %}">{{project.project_name}}</a> <p>PO:{{project.project_po}}</p>
+        </div>
+        {% if samples %}
+          {% for sample in samples %}
+            <div>
+              <a href="{% url 'modify_sample' sample_id=sample.id project_id=project.id %}">{{sample.sample_name}}</a>   
+              <a href="{% url 'delete_sample' sample_id=sample.id project_id=project.id %}">Delete {{sample.sample_name}}</a>
+              {% if tests %}
+              {{tests.id}}
+              {% endif %}   
+                    {% for analysis in sample.analysis.all %}
+                      <li>{{analysis.test_name}}    {{analysis.testMethod}} {{test.sample.id}}</li>
+                      {% if analysis.test_status == 1 %}
+                      <a href="">Initiate {{analysis.test_name}} testing for {{sample.sample_name}}</a>
+                      {% endif %}
+                  {% endfor %}
+              
+                
+                  
+
+                 
+            </div>    
+          {% endfor %}
+          
+        {% else %}
+          <p>This project has no current samples</p>
         {% endif %}
-      {% endfor %}
-      <h2>{{project.id}}</h2>
-      <a href="{% url 'add_sample' project.id %}">Add Sample</a>
+      <br><br><a href="{% url 'add_sample' project.id %}">Add Sample</a>
         {% else %}
             <h3>No project found!</h3>
         {% endif %}
+
     </div>
 {% endblock content%}

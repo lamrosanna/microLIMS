@@ -1,3 +1,4 @@
+from typing import Any, Dict, Tuple
 from django.db import models
 from django.db.models.enums import Choices
 from django.forms import ModelForm
@@ -14,7 +15,7 @@ class company(models.Model):
     state = models.CharField(max_length=2)
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'/")
     phone= models.CharField(validators=[phone_regex], max_length=16, blank=True,default='999999999') # validators should be a list
-    #phone = models.CharField(max_length=12)
+    active=models.BooleanField(default=True)
     CUSTOMER='Customer'
     INTERNAL='Internal'
     EN_type=[
@@ -38,8 +39,13 @@ class company(models.Model):
     def get_byid(cls, id) -> object:
         return get_object_or_404(cls, id=id)
     
+    def delete(self, id):
+        return company.objects.get(id=id).delete()
+    
 class companyForm(ModelForm):
     class Meta:
         model = company
-        fields='__all__'
+        exclude=["entity","active"]
+
+
 

@@ -11,35 +11,30 @@
         <div class="body-container">
             <header id="main-header">
                 <div class="header-container">
-                    <a href="/"><img src="../static/css/images/logo.png" id=logo alt="Logo Image"></a>
+                    <a href="/"><img src="{% static '/images/logo.png' %}" id=logo alt="Logo Image"></a>
                 </div>
             </header>
             <div id="navbar-container">
+                {% if user %}
                 <div class="navbar-item">
-                    {% if user %}
-                    <a href="">Company</a>
+                    <a href="{% url 'viewcompany' %}">Company</a>
                         <ul class="dropdown">
-                            <li><a href="{% url 'viewcompany_company' user.company.id %}">View My Companies</a></li>
-                            <li><a href="{% url 'add_user' %}">Add new User</a></li>
+                            <li><a href="{% url 'add_user' user.company.id %}">Add new User</a></li>
                         </ul>
-                    {% endif %}    
                 </div>
                 <div class="navbar-item">        
-                    <a href="">Test Methods</a>
-                        <ul class="dropdown">
-                            <li><a href="{% url 'add_test' %}">Add new test method</a></li>
-                        </ul>    
+                    <a href="{% url 'view_test' %}">Test Methods</a>   
                 </div>
                 <div class="navbar-item"> 
-                    <a href="">Projects</a>
+                    <a href="{% url 'all_activeprojects' %}">Projects</a>
                         <ul class="dropdown">
-                            <li><a href="{% url 'add_project' %}">Add new Project</a></li>
-                            <li><a href="{% url 'view_allproject' %}">All Projects</a></li>
+                            <li><a href="{% url 'add_project' user.company.id %}">Add new Project</a></li>
                         </ul>
                 </div>
                 <div class="navbar-item"> 
                     <a href="{%url 'logout' %}">Sign Out</a>
                 </div>
+                {% endif %}
             </div>
             <div class ="container">
                 {% block content %}

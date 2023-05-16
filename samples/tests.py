@@ -5,6 +5,7 @@ from projects.models import projects # needed to generate samples
 from samples.models import samples #samples
 from users.models import LIMSuser
 from test_methods.models import test
+from django.shortcuts import get_list_or_404
 
 class SamplesTestCase(TestCase):
     def setUp(self):
@@ -28,7 +29,8 @@ class SamplesTestCase(TestCase):
             test_code="1", 
             testMethod="USP", 
             test_type="1",
-            test_TAT ="1"
+            test_TAT ="1",
+            company=company.objects.get(company_name="Test Company 1")
         )
         test1.save()
         test2=test.objects.create(
@@ -36,7 +38,8 @@ class SamplesTestCase(TestCase):
             test_code="2", 
             testMethod="USP", 
             test_type="1",
-            test_TAT ="2"
+            test_TAT ="2",
+            company=company.objects.get(company_name="Test Company 1")
         )
         test2.save()
         test3=test.objects.create(
@@ -44,7 +47,8 @@ class SamplesTestCase(TestCase):
             test_code="3", 
             testMethod="USP", 
             test_type="1",
-            test_TAT ="3"
+            test_TAT ="3",
+            company=company.objects.get(company_name="Test Company 1")
         )
         test3.save()
         analysis_list=[test1,test2,test3]
@@ -71,6 +75,7 @@ class SamplesTestCase(TestCase):
         # sample3 = sample2.get_allanalysis()
         # #testing = sample2.is_testingfinished()
         # self.assertEqual(sample3, False)
-        User = LIMSuser.objects.get(email="normal@user.com")
-        company=User.company.id
-        self.assertEqual(company, None)
+        customer = company.get_byid(1)
+        tests = test.objects.filter(company=1)
+        
+        self.assertEqual(tests, None)

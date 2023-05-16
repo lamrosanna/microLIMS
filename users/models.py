@@ -1,9 +1,8 @@
 from django.db import models
-from django.forms import ModelForm
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
-from django.shortcuts import get_list_or_404
+from django.shortcuts import get_list_or_404, get_object_or_404
 from .managers import CustomUserManager
 
 class LIMSuser(AbstractBaseUser, PermissionsMixin):
@@ -31,6 +30,14 @@ class LIMSuser(AbstractBaseUser, PermissionsMixin):
     @classmethod
     def get_bycompany(cls, company) -> list:
         return get_list_or_404(cls, company=company)
+    
+    @classmethod
+    def get_byemail(cls, email) -> object:
+        return get_object_or_404(cls, email=email)
+    
+    @classmethod
+    def get_byid(cls, id) -> object:
+        return get_object_or_404(cls, id=id)
 
 
 

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content%}
+            <div class ="company-container">
+                <div class = "companycol">
+                    {% if companies %}
+                        {% for company in companies%}
+                        <h1><a href="{% url 'viewcompany_company' company.id %}">{{company.company_name}}</a></h1>
+                        <li>Primary contact: {{company.customer_contact}}</li>
+                        <li>Address: {{company.address}}, {{company.city}} {{company.state}}</li>
+                        <li>Phone: {{company.phone}}</li>
+                        <li><a href="{% url 'modify_company' company.id %}">Edit Customer Details </a></li>
+                        <li><a href="{% url 'view_allproject' company.id %}">See {{company.company_name}}'s Projects</a></li>
+                        {% endfor %}
+                    {% else %}
+                        <h1>There are currently no companies saved</h1>
+                    {% endif %}
+                </div>
+                <div class = "companycol">
+
+                </div>
+            </div>
+{% endblock content%}
+

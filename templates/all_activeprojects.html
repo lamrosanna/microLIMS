@@ -5,11 +5,12 @@
 {% block content%}
     <div class="project-list">
         {% if project %}
+        <h3>All Currently Active Projects</h3>
             {% for projects in project %}
                 <li><a href="{% url 'view_project' projects.id %}"> {{projects.project_name}}</a></li>
             {% endfor %}
         {% else %}
-            <h3>There are no projects. Please create a project to start.</h3>
+            <h3>There are currently no active projects. Please create a project to continue.</h3>
         {% endif %}
     </div>
 {% endblock content%}

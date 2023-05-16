@@ -1,8 +1,8 @@
 from django.db import models
 from django.forms import ModelForm
 from django.shortcuts import get_object_or_404, get_list_or_404
-from projects.models import projects
 
+from projects.models import projects
 
 # Error Msg 
 SAMPLE_DELETED="Sample deleted"
@@ -17,10 +17,12 @@ class samples(models.Model):
     testing_started=models.DateField(null=True, blank=True)
     testing_completed=models.DateField(null=True, blank=True)
     class Status(models.IntegerChoices):
-         CREATED = 1
-         TESTING = 2
-         COMPLETED = 3
+        CREATED = 1
+        TESTING = 2
+        COMPLETED = 3
+        CANCELLED = 4
     sample_status= models.IntegerField(choices=Status.choices, default=1)
+    active = models.BooleanField(default=True)
 
     # methods
     def __str__(cls) -> str:
@@ -37,7 +39,7 @@ class samples(models.Model):
     
     @classmethod
     def get_byproject(cls, project) -> list:
-        return get_list_or_404(cls, sample_project=project)
+        return samples.objects.filter(sample_project=project)
     
     @classmethod
     def get_allsamples(cls) -> list:
@@ -45,9 +47,7 @@ class samples(models.Model):
     
     @classmethod
     def delete(cls, id) -> None:
-        sample = get_object_or_404(cls, id=id)
-        sample.delete()
-        return {"message":SAMPLE_DELETED}
+        return samples.objects.filter(id=id).delete()
         
     def get_allanalysis(self) -> list:
         return [x.test_name for x in list(self.analysis.all())]
@@ -59,16 +59,4 @@ class samples(models.Model):
     def is_testingfinished(self) -> bool:
         testlist = [x.completed for x in list(self.analysis.all())]
         return False if False in testlist else True
-         
-        
-    # sample model needs a date field to calculate how long testing will be
-    # this should depend on the largest int in the analysis test 
-    # so that it refelect that the sample analysis will be completed
-    # when the longest test is expected to finish
-
-    # should have some fields for log-in by, testing initiated by,
-    # test results verified by.this should be for each analysis ??
-class sampleForm(ModelForm):
-    class Meta:
-        model = samples
-        fields=['sample_name', 'sample_description', 'analysis']
+    

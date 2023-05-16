@@ -7,7 +7,7 @@
             </div>
             <div class = "formcol">
                 <h1>Add new User</h1>
-                    <form class="displayform" action="/add_user/" method="POST" >
+                    <form class="displayform" action="{% url 'add_user' company.id}" method="POST" >
                         {% csrf_token %}
                         <table>
                         {{ form.as_table }}

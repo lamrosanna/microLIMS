@@ -4,13 +4,14 @@
 
 {% block content %}
         <div class ="project-container">
-            <h1>Add new Project</h1>
-            <form class="projectform" action="{% url 'add_project' company.id %}" method="POST" >
+            <h1>Modify Project</h1>
+            <form class="projectform" action="{% url 'modify_project' project.id %}" method="POST" >
                 {% csrf_token %}
                 <table>
                     {{ form.as_table }}
                 </table>
-                <input type="submit" value="Add Project">
+                <input type="submit" value="Save Project">
             </form>
+            
         </div>
 {% endblock content %}

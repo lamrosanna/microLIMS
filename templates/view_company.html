@@ -1,19 +1,36 @@
-{% extends "index.html" %}
+{% extends "base.html" %}
 
 {% block content%}
             <div class ="company-container">
                 <div class = "companycol">
-                    {% if companydetails %}
-                        <h1>{{companydetails.company_name}}</h1>
-                        <li>Primary contact: {{companydetails.customer_contact}}</li>
-                        <li>Address: {{companydetails.address}}, {{companydetails.city}} {{companydetails.state}}</li>
-                        <li>Phone: {{companydetails.phone}}</li>
+                    {% if company %}
+                        <h1><a href="{% url 'modify_company' company.id %}">{{company.company_name}}</a></h1>
+                        <li>Primary contact: {{company.customer_contact}}</li>
+                        <li>Address: {{company.address}}, {{company.city}} {{company.state}}</li>
+                        <li>Phone: {{company.phone}}</li>
                     {% else %}
-                        <h1>You are not assigned to a company</h1>
+                        <h1>Unable to find company</h1>
                     {% endif %}
                 </div>
                 <div class = "companycol">
-
+                    <table>
+                        <tr>
+                            <th>User First Name</th>
+                            <th>User Last Name</th>
+                            <th>User Email</th>
+                        </tr>
+                    
+                    {% if users %}
+                        {% for user in users %}
+                        <tr>
+                            <td>{{user.first_name}}</td>
+                            <td>{{user.last_name}}</td>
+                            <td><a href="{% url 'modify_user' user_id=user.id company_id=company.id %}">{{user.email}}</a></td>
+                        </tr>    
+                        {% endfor %}
+                    {% endif %}
+                    </table>
+                    <a href="{% url 'add_user' company.id %}">Add Users to {{company.company_name}}</a>
                 </div>
             </div>
 {% endblock content%}

@@ -1,6 +1,7 @@
 from django.db import models
 from django.forms import ModelForm
 from django.shortcuts import get_object_or_404, get_list_or_404
+from django.utils.translation import gettext_lazy as _
 
 PROJECT_DELETED="Project was successfully deleted"
 
@@ -16,11 +17,13 @@ class projects(models.Model):
         on_delete=models.CASCADE,
     )
     class Status(models.IntegerChoices):
-        CREATED = 1
-        TESTING = 2 
-        COMPLETED =3
+        CREATED = 1, _("Created")
+        TESTING = 2, _("Testing")
+        COMPLETED = 3, _("Completed")
+        CANCELLED = 4, _("Cancelled")
     project_status = models.IntegerField(choices=Status.choices, default =1)
     project_samples = models.ManyToManyField('samples.samples')
+    active = models.BooleanField(default=True)
 
     # methods
     def __str__(self) -> str:
@@ -35,6 +38,9 @@ class projects(models.Model):
     
     def get_fields(self) -> list:
         return [(field.name, field.value_to_string(self)) for field in projects._meta.fields]
+    
+    def get_status(self):
+        return self.Status(self.project_status).label
 
     @classmethod
     def all(cls) -> list:
@@ -51,9 +57,7 @@ class projects(models.Model):
 
     @classmethod
     def delete(cls, id) -> None:
-        project = get_object_or_404(cls, id=id)
-        project.delete()
-        return {"message":PROJECT_DELETED}
+        return projects.objects.get(id=id).delete()
     
     # should also have a status: logged in, under testing, reported and archived??
     # should have a tenative TAT date assigned based on samples
@@ -65,4 +69,4 @@ class projects(models.Model):
 class projectForm(ModelForm):
     class Meta:
         model = projects
-        fields = ['project_name', 'project_po', 'company']
+        fields = ['project_name', 'project_po']
