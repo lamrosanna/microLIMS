@@ -11,7 +11,7 @@
                 {% endfor %}
             {% endif %}
         <div class = "formcol">
-            <h3>{{project.project_name}}</h3>
+            <h3><a href="{% url 'view_project' project.id %}">{{project.project_name}}</h3></a>
             {% if sample %}
                 {% for samples in sample %}
                 <h4><a href='{% url "modify_sample" sample_id=samples.id project_id=samples.sample_project.id%}'>{{samples.sample_name}}</a></h4>

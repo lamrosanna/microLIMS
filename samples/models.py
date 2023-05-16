@@ -1,5 +1,5 @@
 from django.db import models
-from django.forms import ModelForm
+from django.utils.translation import gettext_lazy as _
 from django.shortcuts import get_object_or_404, get_list_or_404
 
 from projects.models import projects
@@ -17,17 +17,19 @@ class samples(models.Model):
     testing_started=models.DateField(null=True, blank=True)
     testing_completed=models.DateField(null=True, blank=True)
     class Status(models.IntegerChoices):
-        CREATED = 1
-        TESTING = 2
-        COMPLETED = 3
-        CANCELLED = 4
+        CREATED = 1, _("Created")
+        TESTING = 2, _("Testing")
+        COMPLETED = 3, _("Completed")
+        CANCELLED = 4, _("Cancelled")
     sample_status= models.IntegerField(choices=Status.choices, default=1)
     active = models.BooleanField(default=True)
 
     # methods
     def __str__(cls) -> str:
             return cls.sample_name
-    
+    def get_status(self):
+        return self.Status(self.sample_status).label
+
     @classmethod
     def get(cls, name) -> object:
         return get_object_or_404(cls, sample_name=name)

@@ -61,9 +61,21 @@ class Sample_Testing(models.Model):
 
     objects = Sample_TestingManager()
     def __str__(self):
-        return self.Status(self.test_status).label
+        return str(self.test_status)
     def get_status(self):
         return self.Status(self.test_status).label
     @classmethod
     def get_bysample(cls, sample) -> list:
         return get_list_or_404(cls, sample=sample)
+    @classmethod
+    def get_byid(cls, id) -> object:
+        return get_object_or_404(cls, id=id)
+    
+    @classmethod
+    def is_testingcomplete(cls, sample):
+        testing = get_list_or_404(cls, sample=sample)
+        sampletest=[x.test_status for x in testing]
+        if 1 not in sampletest and 2 not in sampletest:
+            return True
+        return False
+        

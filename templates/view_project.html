@@ -16,25 +16,46 @@
         {% if samples %}
           {% for sample in samples %}
             <div>
-              <a href="{% url 'modify_sample' sample_id=sample.id project_id=project.id %}">{{sample.sample_name}}</a>   
+              <a href="{% url 'modify_sample' sample_id=sample.id project_id=project.id %}">{{sample.sample_name}}</a>  
+              {% if sample.sample_status ==1 %} 
               <a href="{% url 'delete_sample' sample_id=sample.id project_id=project.id %}">Delete {{sample.sample_name}}</a>
-              {% if tests %}
-              {{tests.id}}
-              {% endif %}   
+              {% endif %}
+              <table>
+                <tr>
+                  <th>Test Assigned</th>
+                  <th>Test Method</th>
+                  <th>Testing Status</th>
+                  <th></th>
+                  <th></th>
+                </tr>
                     {% for analysis in sample.analysis.all %}
-                      <li>{{analysis.test_name}}    {{analysis.testMethod}} {{test.sample.id}}</li>
-                      {% if analysis.test_status == 1 %}
-                      <a href="">Initiate {{analysis.test_name}} testing for {{sample.sample_name}}</a>
+                      {% if tests %}
+                        {%for test in tests%}
+                          {% if test.testing == analysis%}
+                            {% if test.sample == sample %}
+                            <tr>
+                                <td>{{analysis.test_name}}</td>
+                                <td>{{analysis.testMethod}}</td>
+                                <td>{{test.get_status}}</td>
+                                {% if test.test_status == 1 %}
+                                <td><a href="{% url 'initiate_testing' project_id=project.id sampletesting_id=test.id %}">Initiate {{analysis.test_name}} testing for {{sample.sample_name}}</a></td>
+                                {% endif %}
+                                {% if test.test_status == 2 %}
+                                <td><a href="{% url 'complete_testing' project_id=project.id sampletesting_id=test.id %}">Complete {{analysis.test_name}} testing for {{sample.sample_name}}</a></td>
+                                {% endif %}
+                                {% if test.test_status == 2 or test.test_status == 1 %}
+                                  <td><a href="">Cancel {{analysis.test_name}} testing</a></td>
+                                {% endif %}
+                            </tr>
+                            {% endif %}
+                          {% endif %}
+                        {% endfor %}  
                       {% endif %}
-                  {% endfor %}
-              
-                
-                  
-
-                 
+                      
+                    {% endfor %} 
+              </table>   
             </div>    
           {% endfor %}
-          
         {% else %}
           <p>This project has no current samples</p>
         {% endif %}

@@ -41,6 +41,12 @@ class projects(models.Model):
     
     def get_status(self):
         return self.Status(self.project_status).label
+    
+    def is_complete(self):
+        project=[x.sample_status for x in self.project_samples.all()]
+        if 1 not in project and 2 not in project:
+            return True
+        return False
 
     @classmethod
     def all(cls) -> list:

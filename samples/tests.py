@@ -4,7 +4,7 @@ from customers.models import company # needed to generate project
 from projects.models import projects # needed to generate samples
 from samples.models import samples #samples
 from users.models import LIMSuser
-from test_methods.models import test
+from test_methods.models import test, Sample_Testing
 from django.shortcuts import get_list_or_404
 
 class SamplesTestCase(TestCase):
@@ -30,7 +30,6 @@ class SamplesTestCase(TestCase):
             testMethod="USP", 
             test_type="1",
             test_TAT ="1",
-            company=company.objects.get(company_name="Test Company 1")
         )
         test1.save()
         test2=test.objects.create(
@@ -39,7 +38,6 @@ class SamplesTestCase(TestCase):
             testMethod="USP", 
             test_type="1",
             test_TAT ="2",
-            company=company.objects.get(company_name="Test Company 1")
         )
         test2.save()
         test3=test.objects.create(
@@ -48,7 +46,6 @@ class SamplesTestCase(TestCase):
             testMethod="USP", 
             test_type="1",
             test_TAT ="3",
-            company=company.objects.get(company_name="Test Company 1")
         )
         test3.save()
         analysis_list=[test1,test2,test3]
@@ -66,16 +63,23 @@ class SamplesTestCase(TestCase):
         testcompany = company.objects.get(company_name="Test Company 1")
         user = LIMSuser.objects.create_user(email="normal@user.com", password="foo", company_id=testcompany.id)
         user.save()
+
+        for tests in sample.analysis.all():
+            sampletest=Sample_Testing(testing=tests, sample=sample)
+            sampletest.save()
     def test_startTesting(self):
-
+        sample = samples.get_byid(1)
+        sampletests = Sample_Testing.get_bysample(sample)
+        for each in sampletests:
+            each.test_status = 3
+            each.save()
+        samplecomplete= Sample_Testing.is_testingcomplete(sample)
         
-        # self.assertEqual(project1.project_po, "92308")
-
-        # sample2 = samples.get_byid(1)
-        # sample3 = sample2.get_allanalysis()
-        # #testing = sample2.is_testingfinished()
-        # self.assertEqual(sample3, False)
-        customer = company.get_byid(1)
-        tests = test.objects.filter(company=1)
-        
-        self.assertEqual(tests, None)
+        self.assertEqual(samplecomplete, True)
+    def test_projectcomplete(self):
+        project = projects.get_projectbyid(1)
+        for eachsample in project.project_samples.all():
+            eachsample.sample_status = 3
+            eachsample.save()
+        projectcomplete = project.is_complete()
+        self.assertEqual(projectcomplete,True)

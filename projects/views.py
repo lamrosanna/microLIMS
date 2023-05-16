@@ -35,7 +35,7 @@ def view_project(request, project_id):
     #need validation to check user credentials
     project = projects.get_projectbyid(project_id)
     sample = samples.get_byproject(project_id)
-    sample_tests=[Sample_Testing.get_bysample(x) for x in sample]
+    sample_tests=Sample_Testing.objects.all()
     context = {"project":project, 'samples':sample, 'tests':sample_tests}
     return render(request, 'view_project.html',context)
 

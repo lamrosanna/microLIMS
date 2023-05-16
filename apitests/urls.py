@@ -31,6 +31,8 @@ projectpatterns=[
     path('<int:project_id>/add_sample/', samples.add_sample, name="add_sample"),
     path('<int:project_id>/samples/<int:sample_id>/modify/', samples.modify_sample, name="modify_sample"),
     path('<int:project_id>/samples/<int:sample_id>/delete/', samples.delete_sample, name="delete_sample"),
+    path('<int:project_id>/initiate_testing/<int:sampletesting_id>/', samples.initiate_testing, name="initiate_testing"),
+    path('<int:project_id>/complete_testing/<int:sampletesting_id>/', samples.complete_testing, name="complete_testing"),
 ]
 companypatterns=[
     path('<int:company_id>/', customers.viewcompany_company, name ='viewcompany_company'),
