@@ -1,2 +1,3 @@
 # µLIMS (Laboratory Information System)
-a light-weight management system for sample testing, and reporting
+
+a MICRO light-weight management system for sample logging, sample testing, and reporting. Inspired by my experience with a similar system.

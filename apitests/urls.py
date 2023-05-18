@@ -28,20 +28,27 @@ projectpatterns=[
     path('<int:project_id>/',projects.view_project, name="view_project"),
     path('<int:project_id>/modify/', projects.modify_project, name='modify_project'),
     path('<int:project_id>/delete/', projects.delete_project, name='delete_project'),
+    path('<int:project_id>/cancel/', projects.cancel_project, name='cancel_project'),
+    path('<int:project_id>/canceltest/<int:testing_id>/', test.cancel_test, name='cancel_test'),
+    path('<int:project_id>/deletetest/<int:testing_id>/', test.delete_sampleTest, name='delete_test'),
     path('<int:project_id>/add_sample/', samples.add_sample, name="add_sample"),
     path('<int:project_id>/samples/<int:sample_id>/modify/', samples.modify_sample, name="modify_sample"),
     path('<int:project_id>/samples/<int:sample_id>/delete/', samples.delete_sample, name="delete_sample"),
-    path('<int:project_id>/initiate_testing/<int:sampletesting_id>/', samples.initiate_testing, name="initiate_testing"),
-    path('<int:project_id>/complete_testing/<int:sampletesting_id>/', samples.complete_testing, name="complete_testing"),
+    path('<int:project_id>/initiate_testing/<int:sampletesting_id>/', projects.initiate_testing, name="initiate_testing"),
+    path('<int:project_id>/complete_testing/<int:sampletesting_id>/', projects.complete_testing, name="complete_testing"),
+    
 ]
 companypatterns=[
     path('<int:company_id>/', customers.viewcompany_company, name ='viewcompany_company'),
     path('<int:company_id>/modify/', customers.modify_company, name ='modify_company'),
     path('<int:company_id>/delete/', customers.inactivate_company, name ='inactivate_company'),
-    path('<int:company_id>/add_user/',users.add_user, name="add_user"),
+    path('<int:company_id>/add_user/',users.addcompany_user, name="addcompany_user"),
     path('<int:company_id>/user/<int:user_id>/modify/',users.modify_user, name="modify_user"),
-    path('<int:company_id>/add_project/', projects.add_project, name="add_project"),
     path('<int:company_id>/projects/', projects.view_allproject, name='view_allproject'),
+]
+testpatterns=[
+    path('',test.add_test, name='add_test'),
+    path('deactivate/<int:test_id>', test.deactivate_test, name="deactivate_test")
 ]
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -52,5 +59,8 @@ urlpatterns = [
     path('viewcompany/',customers.viewcompany, name ='viewcompany'),
     path('company/', include(companypatterns)),
     path('projects/', include(projectpatterns)),
-    path('tests/', test.view_test, name='view_test'),
+    path('tests/', include(testpatterns)),
+    path('add_project/', projects.add_project, name="add_project"),
+    path('add_user/', users.add_user, name="add_user"),
+
 ]

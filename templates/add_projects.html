@@ -5,7 +5,7 @@
 {% block content %}
         <div class ="project-container">
             <h1>Add new Project</h1>
-            <form class="projectform" action="{% url 'add_project' company.id %}" method="POST" >
+            <form class="projectform" action="{% url 'add_project'%}" method="POST" >
                 {% csrf_token %}
                 <table>
                     {{ form.as_table }}

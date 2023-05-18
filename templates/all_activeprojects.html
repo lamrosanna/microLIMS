@@ -7,7 +7,38 @@
         {% if project %}
         <h3>All Currently Active Projects</h3>
             {% for projects in project %}
-                <li><a href="{% url 'view_project' projects.id %}"> {{projects.project_name}}</a></li>
+            <table>
+                <tr>
+                    <th>Project Name</th>
+                    <th>Project PO</th>
+                    <th>Submitted date</th>
+                    <th>Sample Count</th>
+                    <th>Company</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td><a href="{% url 'view_project' projects.id %}">{{projects.project_name}}</a></td>
+                    <td>{{projects.project_po}}</td>
+                    <td>{{projects.date_submitted}}</td>
+                    
+                    {% for sample in samplecount %}
+                        {% if samplecount == 0 %}
+                            <td>Project has no samples</td>
+                        {%else%}
+                            <td>{{sample.count}}</td>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    <td>{{projects.company}}</td>
+                    <td>{{projects.get_status}}</td>
+                    {% if projects.project_status == 1 %}
+                        <td><a href="{% url 'delete_project' projects.id %}">Delete Project</a></td>
+                    {% else %}
+                        <td><a href="{% url 'cancel_project' projects.id %}">Cancel Project</a></td>
+                    {% endif %}
+                </tr>
+            </table>
             {% endfor %}
         {% else %}
             <h3>There are currently no active projects. Please create a project to continue.</h3>

@@ -8,7 +8,7 @@ from .managers import Sample_TestingManager
 # Create your models here.
 class test(models.Model):
     id=models.BigAutoField(primary_key=True)
-    test_name = models.CharField(max_length=20)
+    test_name = models.CharField(max_length=20, unique=True)
     test_code= models.CharField(max_length=10, unique=True)
     testMethod = models.CharField(max_length=20)
     class Tst_type(models.IntegerChoices):
@@ -19,11 +19,14 @@ class test(models.Model):
         default=1,
     )
     test_TAT= models.IntegerField()
+    active = models.BooleanField(default=True)
     def __str__(self) -> str:
         return self.test_name
     def get_fields(self) -> list:
         return[(field.name, field.value_to_string(self)) for field in test._meta.fields]
     
+    def get_type(self):
+        return self.Tst_type(self.test_type).label
     @classmethod
     def get_bycode(cls, testcode) -> object:
         return get_object_or_404(cls, test_code=testcode)
@@ -78,4 +81,7 @@ class Sample_Testing(models.Model):
         if 1 not in sampletest and 2 not in sampletest:
             return True
         return False
-        
+    
+    @classmethod
+    def delete(self, id) -> None:
+        return Sample_Testing.objects.filter(id=id).delete()

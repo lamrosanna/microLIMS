@@ -22,10 +22,11 @@ class projects(models.Model):
         COMPLETED = 3, _("Completed")
         CANCELLED = 4, _("Cancelled")
     project_status = models.IntegerField(choices=Status.choices, default =1)
-    project_samples = models.ManyToManyField('samples.samples')
+    project_samples = models.ManyToManyField('samples.samples', related_name='project_samples')
     active = models.BooleanField(default=True)
 
     # methods
+    
     def __str__(self) -> str:
         return self.project_name
     
@@ -39,14 +40,18 @@ class projects(models.Model):
     def get_fields(self) -> list:
         return [(field.name, field.value_to_string(self)) for field in projects._meta.fields]
     
-    def get_status(self):
+    def get_status(self) -> str:
         return self.Status(self.project_status).label
     
-    def is_complete(self):
+    def is_complete(self) -> bool:
         project=[x.sample_status for x in self.project_samples.all()]
         if 1 not in project and 2 not in project:
             return True
         return False
+        
+    # check if project is active
+    def is_active(self) -> bool:
+        return self.active   
 
     @classmethod
     def all(cls) -> list:
@@ -63,7 +68,7 @@ class projects(models.Model):
 
     @classmethod
     def delete(cls, id) -> None:
-        return projects.objects.get(id=id).delete()
+        return projects.objects.filter(id=id).delete()
     
     # should also have a status: logged in, under testing, reported and archived??
     # should have a tenative TAT date assigned based on samples
@@ -75,4 +80,4 @@ class projects(models.Model):
 class projectForm(ModelForm):
     class Meta:
         model = projects
-        fields = ['project_name', 'project_po']
+        fields = ['project_name', 'project_po', "company"]

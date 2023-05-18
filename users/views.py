@@ -11,18 +11,18 @@ INVALID_LOGIN="Email/password was not recognized."
 AUTHENTICATION_FAILED="Email/password was not authenticated"
 
 
-def add_user(request, company_id):
+def addcompany_user(request, company_id):
     user_company = company.get_byid(id=company_id)
     if request.method == 'POST':
-        form = LIMSuserForm(request.POST)
+        form = companyuserForm(request.POST)
         if form.is_valid():
             form.instance.company=user_company
             form.save()
-    form = LIMSuserForm()
-    context = {'form': form, 'company':user_company}
-    return render(request, 'add_user.html',context)
+    form = companyuserForm()
+    context = {'form':form, 'company':user_company}
+    return render(request, 'addcompany_user.html',context)
 
-def add_user_noCompany(request):
+def add_user(request):
     if request.method == 'POST':
         form = companyuserForm(request.POST)
         if form.is_valid():

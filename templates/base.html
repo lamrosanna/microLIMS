@@ -19,16 +19,16 @@
                 <div class="navbar-item">
                     <a href="{% url 'viewcompany' %}">Company</a>
                         <ul class="dropdown">
-                            <li><a href="{% url 'add_user' user.company.id %}">Add new User</a></li>
+                            <li><a href="{% url 'add_user' %}">Add new User</a></li>
                         </ul>
                 </div>
                 <div class="navbar-item">        
-                    <a href="{% url 'view_test' %}">Test Methods</a>   
+                    <a href="{% url 'add_test' %}">Test Methods</a>   
                 </div>
                 <div class="navbar-item"> 
                     <a href="{% url 'all_activeprojects' %}">Projects</a>
                         <ul class="dropdown">
-                            <li><a href="{% url 'add_project' user.company.id %}">Add new Project</a></li>
+                            <li><a href="{% url 'add_project'%}">Add new Project</a></li>
                         </ul>
                 </div>
                 <div class="navbar-item"> 

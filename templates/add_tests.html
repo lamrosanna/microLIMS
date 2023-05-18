@@ -5,7 +5,7 @@
     <div class ="form-container">
         <div class = "formcol">
             <h1>Add new Test Methods for Analysis</h1>
-            <form class="displayform" action="{% url 'add_test' company.id %}" method="POST" >
+            <form class="displayform" action="{% url 'add_test'%}" method="POST" >
                 {% csrf_token %}
                 <table>
                     {{ test.as_table }}

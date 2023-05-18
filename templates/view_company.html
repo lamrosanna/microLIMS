@@ -30,7 +30,7 @@
                         {% endfor %}
                     {% endif %}
                     </table>
-                    <a href="{% url 'add_user' company.id %}">Add Users to {{company.company_name}}</a>
+                    <a href="{% url 'addcompany_user' company.id %}">Add Users to {{company.company_name}}</a>
                 </div>
             </div>
 {% endblock content%}

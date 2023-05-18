@@ -3,19 +3,39 @@
 <link rel="stylesheet" href="{% static 'index/style.css' %}">
 
 {% block content %}
-            <div class ="row">
-                <div class = "col p-3">
+            <div class ="form-container">
+                <div class = "formcol">
                     <h1>Total tests available</h1>
-                </div>
-                <div class = "col"></div>
-                <div class = "col">
                     {% if tests %}
-                    {% for test in tests %}
-                    <br>{{test.test_name}}
-                    {% endfor %}
+                    <table>
+                        <tr>
+                            <th>Test Name</th>
+                            <th>Test Code</th>
+                            <th>Method</th>
+                            <th>Test Type</th>
+                        </tr>
+                        {% for test in tests %}
+                        <tr>
+                            <td>{{test.test_name}}</td>
+                            <td>{{test.test_code}}</td>
+                            <td>{{test.testMethod}}</td>
+                            <td>{{test.test_type.get_type}}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
                     {% else %}
-                    <h3>No Tests were created! </h3>
+                        <h3>No Tests were created! </h3>
                     {% endif %}
+                </div>
+                <div class="formcol">
+                    <h1>Add new Test Methods for Analysis</h1>
+                    <form class="displayform" action="{% url 'add_test'%}" method="POST" >
+                        {% csrf_token %}
+                        <table>
+                            {{ form.as_table }}
+                        </table>
+                        <input class="displayform-submit" type="submit" value="Add Test Method">
+                    </form>
                 </div>
             </div>
 {% endblock content %}
