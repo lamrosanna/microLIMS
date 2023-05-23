@@ -75,8 +75,9 @@ def view_allproject(request, company_id):
 # view all currently active projects 
 def all_activeprojects(request):
     allprojects = projects.objects.filter(active=True)
-    samplecount = projects.objects.annotate(count=Count('project_samples'))
-    context={'project':allprojects, 'samplecount':samplecount}
+    # allprojects.
+    # samplecount = projects.objects.annotate(count=Count('project_samples'))
+    context={'project':allprojects}
     return render(request, 'all_activeprojects.html', context)
 
 # modify project by id

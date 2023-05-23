@@ -21,14 +21,7 @@
                     <td><a href="{% url 'view_project' projects.id %}">{{projects.project_name}}</a></td>
                     <td>{{projects.project_po}}</td>
                     <td>{{projects.date_submitted}}</td>
-                    
-                    {% for sample in samplecount %}
-                        {% if samplecount == 0 %}
-                            <td>Project has no samples</td>
-                        {%else%}
-                            <td>{{sample.count}}</td>
-                        {% endif %}
-                    {% endfor %}
+                    <td>{{projects.get_samplecount}}</td>
                     
                     <td>{{projects.company}}</td>
                     <td>{{projects.get_status}}</td>

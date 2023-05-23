@@ -1,3 +1,16 @@
-# µLIMS (Laboratory Information System)
+# ![µLIMS Logo](/static/images/logo.png)
 
-a MICRO light-weight management system for sample logging, sample testing, and reporting. Inspired by my experience with a similar system.
+## µLIMS (Laboratory Information System)
+
+a CRUD app that implements a light-weight project management system for sample logging, testing, and reporting with user authentication and authorization. Inspired by my experience with a similar system.
+
+## Installation
+
+Docker file coming soon! 
+
+## Usage
+
+## Contributing 
+
+## License 
+[MIT](https://choosealicense.com/licenses/mit/)

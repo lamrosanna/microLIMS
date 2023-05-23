@@ -48,6 +48,9 @@ class projects(models.Model):
         if 1 not in project and 2 not in project:
             return True
         return False
+    
+    def get_samplecount(self) -> int:
+        return self.project_samples.all().count()
         
     # check if project is active
     def is_active(self) -> bool:

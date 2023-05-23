@@ -45,7 +45,8 @@
                                 {% endif %}
                                 {% if test.test_status == 1 %}
                                   <td><a href="{% url 'delete_test' project_id=project.id testing_id=test.id%}">Remove {{analysis.test_name}} testing</a></td>
-                                {% else %}
+                                {% endif %}  
+                                {% if test.test_status >= 2 and test.test_status <= 3 %}
                                 <td><a href="{% url 'cancel_test' project_id=project.id testing_id=test.id%}">Cancel {{analysis.test_name}} testing</a></td>
                                 {% endif %}
                             </tr>
