@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load bootstrap5 %}
 <link rel="stylesheet" href="{% static 'index/style.css' %}">
 
 {% block content %}
@@ -7,10 +8,10 @@
             <h1>Modify User</h1>
             <form class="projectform" action="{% url 'modify_user' user_id=user.id company_id=company.id%}" method="POST" >
                 {% csrf_token %}
-                <table>
-                    {{ form.as_table }}
-                </table>
-                <input type="submit" value="Save User">
+                {% bootstrap_form form %}
+                {% buttons %}
+                    <button type="submit" class="btn btn-primary">Save User</button>
+                {% endbuttons %}
             </form>
             
         </div>

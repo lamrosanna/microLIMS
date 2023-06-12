@@ -1,16 +1,16 @@
 {% extends "base.html" %}
-{% load static %}
-<link rel="stylesheet" href="{% static 'index/style.css' %}">
+{% load bootstrap5 %}
+
 {% block content%}
     <div class ="form-container">
         <div class = "formcol">
             <h1>Add new Test Methods for Analysis</h1>
             <form class="displayform" action="{% url 'add_test'%}" method="POST" >
                 {% csrf_token %}
-                <table>
-                    {{ test.as_table }}
-                </table>
-                <input class="displayform-submit" type="submit" value="Add Test Method">
+                {% bootstrap_form test %}
+                {% buttons %}
+                    <button class="btn-primary" type="submit">Add Test Method</button>
+                {% endbuttons %}
             </form>
         </div>
     </div>

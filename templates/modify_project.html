@@ -1,17 +1,19 @@
 {% extends "base.html" %}
 {% load static %}
+{% load bootstrap5 %}
 <link rel="stylesheet" href="{% static 'index/style.css' %}">
 
 {% block content %}
-        <div class ="project-container">
+        <div class ="fullpage-form">
+            <div class="formcol-form">
             <h1>Modify Project</h1>
             <form class="projectform" action="{% url 'modify_project' project.id %}" method="POST" >
                 {% csrf_token %}
-                <table>
-                    {{ form.as_table }}
-                </table>
-                <input type="submit" value="Save Project">
+                {% bootstrap_form form %}
+                {% buttons %}
+                    <button type="submit" class="btn btn-primary">Save Project</button>
+                {% endbuttons %}
             </form>
-            
+            </div>
         </div>
 {% endblock content %}

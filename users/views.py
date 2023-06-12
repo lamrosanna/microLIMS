@@ -19,7 +19,8 @@ def addcompany_user(request, company_id):
             form.instance.company=user_company
             form.save()
     form = companyuserForm()
-    context = {'form':form, 'company':user_company}
+    users = LIMSuser.get_bycompany(user_company)
+    context = {'form':form, 'company':user_company, 'users':users}
     return render(request, 'addcompany_user.html',context)
 
 def add_user(request):

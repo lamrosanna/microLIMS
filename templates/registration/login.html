@@ -1,21 +1,15 @@
 {% extends 'login_base.html' %}
+{% load bootstrap5 %}
 
 {% block content %}
-    <div class="form-container">
-        <div>
-            {% if messages %}
-                {% for message in messages %}
-                    {{message}}
-                {% endfor %}
-            {% endif %}
-        </div>
+    <div class="login-base-container">
         <form class="login-form" method="POST">
             {% csrf_token %}
-            <table class="login-table">
-                {{ login_form.as_table }}
-            </table>
+            {% bootstrap_form login_form%}
             <div class="login-btn">
-                <button class="btn" type="submit">Login</button>
+            {% buttons %}
+            <button class="btn btn-primary text-right" type="submit">Login</button>
+            {% endbuttons %}
             </div>
         </form>
     </div>

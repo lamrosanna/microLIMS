@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load bootstrap5 %}
+
 
 {% block content %}
         <div class ="form-container">
@@ -6,10 +8,10 @@
                 <h1>Add new User</h1>
                     <form class="displayform" action="{% url 'add_user'}" method="POST" >
                         {% csrf_token %}
-                        <table>
-                        {{ form.as_table }}
-                        </table>
-                        <input type="submit" value="Add New User">
+                        {% bootstrap_form form %}
+                        {% buttons %}
+                            <button type="submit" class="btn btn-primary">Add New User</button>
+                        {% endbuttons %}
                     </form>
             </div>
         </div>

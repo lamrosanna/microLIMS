@@ -68,15 +68,13 @@ def view_project(request, project_id):
 # view all active projects by company(companyid)
 def view_allproject(request, company_id):
     companyProject = company.get_byid(id=company_id)
-    project = projects.objects.filter(company=company_id).filter(active=True)
+    project = projects.objects.filter(company=company_id).filter(active=True).order_by("project_status")
     context = {'project':project, 'company':companyProject}
     return render(request, 'all_projects.html', context)
 
 # view all currently active projects 
 def all_activeprojects(request):
     allprojects = projects.objects.filter(active=True)
-    # allprojects.
-    # samplecount = projects.objects.annotate(count=Count('project_samples'))
     context={'project':allprojects}
     return render(request, 'all_activeprojects.html', context)
 
@@ -131,6 +129,7 @@ def cancel_project(request, project_id):
     try:
         if project.project_status != 1:
             project.project_status = 4 
+            project.active = 0
             project.save()
             for sample in project.project_samples.all():
                 cancel_sampleid(sample.id)
@@ -165,11 +164,12 @@ def initiate_testing(request, project_id, sampletesting_id):
 # Update status of sample tests, sample and project to completed. 
 def complete_testing(request, project_id, sampletesting_id):
     try:
-        track_test=complete_tracktesting(sampletrack_id=sampletesting_id)
+        track_test=complete_tracktesting(id=sampletesting_id)
         sample =complete_sample(sample_id=track_test.sample.id)
         project =complete_projecttesting(project_id=project_id)
         return redirect('view_project', project_id=project.id)
     except:
+        project = projects.get_projectbyid(id=project_id)
         messages.error(request,UPDATE_ERROR)
         sample = samples.get_byproject(project)
         sample_tests=Sample_Testing.objects.all()

@@ -5,7 +5,7 @@
                 <div class = "companycol">
                     {% if companies %}
                         {% for company in companies%}
-                        <h1><a href="{% url 'viewcompany_company' company.id %}">{{company.company_name}}</a></h1>
+                        <h4><a href="{% url 'viewcompany_company' company.id %}">{{company.company_name}}</a></h4>
                         <li>Primary contact: {{company.customer_contact}}</li>
                         <li>Address: {{company.address}}, {{company.city}} {{company.state}}</li>
                         <li>Phone: {{company.phone}}</li>

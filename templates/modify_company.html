@@ -1,21 +1,23 @@
 {% extends "base.html" %}
 {% load static %}
+{% load bootstrap5 %}
 <link rel="stylesheet" href="{% static 'index/style.css' %}">
 
 
 {% block content %}
-    <div class ="form-container">
-        <div class = "formcol">
-            <h1>Modify Company Information</h1>
-            <form class="displayform" action="{% url 'add_company' company.id}" method="POST" >
-                {% csrf_token %}
-                <table>
-                    {{ form.as_table }}
-                </table>
-                <input class="displayform-submit"type="submit" value="Save">    
-            </form>
-            <a href="{% url 'inactivate_company' company.id %}">Delete Company</a>
+    <div class="form-container">
+        <div class="fullpage-form">
+            <div class="formcol-form">
+                <h2>Modify Company Information</h2>
+                <form class="displayform" action="{% url 'add_company' company.id}" method="POST" >
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    {% buttons %}
+                        <button class="btn btn-primary"type="submit">Save</button>
+                    {% endbuttons %}    
+                </form>
+                <a href="{% url 'inactivate_company' company.id %}">Delete Company</a>
+            </div>
         </div>
-
     </div>
 {% endblock content %}

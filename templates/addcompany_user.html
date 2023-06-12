@@ -1,19 +1,40 @@
 {% extends "base.html" %}
+{% load bootstrap5 %}
 
 {% block content %}
         <div class ="form-container">
             <div class = "formcol">
-                <h1>Current Users in Company</h1>
+                <h4>Current Users in Company</h4>
+                {% if users %}
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Date Joined</th>
+                    </tr>
+                 {% for user in users %}   
+                 <tr>
+                    <td>{{user.first_name}} {{user.last_name}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.date_joined}}</td>
+                 </tr>
+                 {% endfor%}
+                </table>
+                {% else %}
+                <h5>There are no users for this company</h5>
+                {% endif %}
             </div>
-            <div class = "formcol">
-                <h1>Add new User</h1>
+            <div class="formcol">
+                <div class="formcol-form">
+                <h4>Add new User</h4>
                     <form class="displayform" action="{% url 'add_user' company.id}" method="POST" >
                         {% csrf_token %}
-                        <table>
-                        {{ form.as_table }}
-                        </table>
-                        <input type="submit" value="Add New User">
+                        {% bootstrap_form form %}
+                        {% buttons %}  
+                            <button type="submit" class="btn btn-primary">Add New User</button>
+                        {% endbuttons %}
                     </form>
+                    </div>
             </div>
         </div>
 {% endblock content %}

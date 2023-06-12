@@ -2,13 +2,11 @@
 
 {% block content%}
     <div class="project-list">
-        {% if messages %}
-            {% for message in messages %}
-                {{message}}
-            {% endfor %}
-        {% endif %}
+        
         {% if project %}
-        <table>
+        <div class="row justify-content-center">
+        <h4>Current Projects</h4>    
+        <table class="table table-borderless table-hover" id="fullpage-table">
             <tr>
                 <th>Project Name</th>
                 <th>Project PO</th>
@@ -24,6 +22,7 @@
             </tr>    
             {% endfor %}
         </table>
+        </div>
         {% else %}
             <h3>There are no projects. Please create a project to start.</h3>
         {% endif %}

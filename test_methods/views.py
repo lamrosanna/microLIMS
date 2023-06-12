@@ -9,12 +9,15 @@ from samples.models import samples
 
 #errors
 CANCEL_ERROR="There was an error in cancelling test."
-CANCEL_SUCCESS="Your test was cancelled"
+CANCEL_SUCCESS="Your test was cancelled."
 TEST_EXISTS="A Test with that name/code already exists."
 TEST_CREATION_SUCCESS="Test created successfully."
 DEACTIVATE_ERROR="There was an error deactivating test"
-DELETE_SUCCESS="Test was deleted"
-DELETE_ERROR="There was an error in deleting test"
+DEATIVATE_SUCCESS="Test was successfully deactivated"
+ACTIVATE_SUCCESS="Test was successfully activated."
+ACTIVATE_ERROR="There was an error in activating test."
+DELETE_SUCCESS="Test was deleted."
+DELETE_ERROR="There was an error in deleting test."
 
 # Create Test
 def add_test(request):
@@ -54,11 +57,25 @@ def cancel_test(request, project_id, testing_id ):
 # deactivate test method
 def deactivate_test(request, test_id):
     activeTests = test.get_byid(id=test_id)
-    if activeTests.active:
+    if activeTests.active==True:
         activeTests.active=False
         activeTests.save()
-        return redirect('tests/')
+        messages.success(request, DEATIVATE_SUCCESS)
+        return redirect('add_test')
     messages.error(request, DEACTIVATE_ERROR)
+    form = testdetailsForm()
+    test_detail = test.objects.order_by("test_name")
+    context = {'form':form,'tests': test_detail}
+    return render(request, 'view_tests.html', context)
+
+def activate_test(request, test_id):
+    activeTests = test.get_byid(id=test_id)
+    if activeTests.active == False:
+        activeTests.active=True
+        activeTests.save()
+        messages.success(request, ACTIVATE_SUCCESS)
+        return redirect('add_test')
+    messages.error(request, ACTIVATE_ERROR)
     form = testdetailsForm()
     test_detail = test.objects.order_by("test_name")
     context = {'form':form,'tests': test_detail}
@@ -69,17 +86,16 @@ def delete_sampleTest(request, project_id, testing_id):
     sample_test=Sample_Testing.get_byid(id=testing_id)
     project = projects.get_projectbyid(id=project_id)
     sample=samples.get_byid(id=sample_test.sample.id)
-    if sample.sample_status==1:
-        try:
-            Sample_Testing.delete(sample_test.id)
-            messages.success(request, DELETE_SUCCESS)
-            return redirect('view_project', project_id=project.id)
-        except:
-            messages.error(request, DELETE_ERROR)
-            sample = samples.get_byproject(project)
-            sample_tests=Sample_Testing.objects.all()
-            context = {"project":project, 'samples':sample, 'tests':sample_tests}
-            return render(request, 'view_project.html', context)
+    try:
+        Sample_Testing.delete(sample_test.id)
+        messages.success(request, DELETE_SUCCESS)
+        return redirect('view_project', project_id=project.id)
+    except:
+        messages.error(request, DELETE_ERROR)
+        sample = samples.get_byproject(project)
+        sample_tests=Sample_Testing.objects.all()
+        context = {"project":project, 'samples':sample, 'tests':sample_tests}
+        return render(request, 'view_project.html', context)
         
 # cancel all sample testing by sample id
 def cancel_alltesting(sample_id):

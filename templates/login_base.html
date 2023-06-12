@@ -5,6 +5,10 @@
         <meta charset = "utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         {% load static %}
+        {% load bootstrap5 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+        {% bootstrap_messages %}
         <link rel="stylesheet" href="{% static 'index/style.css' %}">
     </head>
     <body>
@@ -18,10 +22,8 @@
                 <div class="navbar-item"> 
                 </div>
             </div>
-            <div class="login-base-container">
-                {% block content %}
-                {% endblock content%}
-            </div>
+            {% block content %}
+            {% endblock content%}
         </div>
     </body>
 </html>

@@ -64,14 +64,7 @@ img{
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
 }
-.container{
-    width: 80%;
-    display: flex;
-    text-align: left;
-    margin-left: 6%;
-    margin-right: 6%;
-    float:left;
-}
+
 h1, h3{
     color:#411530;
 }
@@ -85,11 +78,10 @@ h1, h3{
     float: left;
 }
 .displayform{
-    width:80%;
+    width:100%;
     height:auto;
-    margin-left:25%;
-    margin-right:25%;
 }
+
 .displayform label, .projectform label{
     color:#411530;
 }
@@ -102,27 +94,51 @@ h1, h3{
 .login-base-container{
     width: 88%;
     display: flex;
-    text-align: center;
+    text-align: left;
     margin-left: 6%;
     margin-right: 6%;
 }
 .login-form{
-    width: 50%;
     height: auto;
-    text-align: right;
+    width:50%;
+    text-align: left;
     margin-right: auto;
     margin-left: auto;
 }
 .login-table{
     margin:auto;
     padding-bottom:10px;
+    width:47%;
 }
 .login-btn{
-    width:75%;
-    margin-right:auto;
-    margin-left:auto;
-    
+    text-align: right;
 }
 .logout-container{
-    display: block;
+    margin-right:25%;
+    margin-left:25%;
+    text-align:center;
+}
+.fullpage-form{
+    margin-right:25%;
+    margin-left:25%;
+}
+.formcol-form{
+    width: 100%;
+    height: auto;
+    text-align: left;
+}
+.formcol-content{
+    width: 100%;
+    height: auto;
+    text-align: left;
+    margin: auto;
+}
+table{
+    width: 100%;
+}
+#fullpage-table{
+    width:50%;
+}
+table.project-list{
+    text-align: center;
 }

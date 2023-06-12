@@ -1,41 +1,50 @@
 {% extends "base.html" %}
-{% load static %}
-<link rel="stylesheet" href="{% static 'index/style.css' %}">
+{% load bootstrap5 %}
 
 {% block content %}
-            <div class ="form-container">
-                <div class = "formcol">
-                    <h1>Total tests available</h1>
-                    {% if tests %}
-                    <table>
-                        <tr>
-                            <th>Test Name</th>
-                            <th>Test Code</th>
-                            <th>Method</th>
-                            <th>Test Type</th>
-                        </tr>
-                        {% for test in tests %}
-                        <tr>
-                            <td>{{test.test_name}}</td>
-                            <td>{{test.test_code}}</td>
-                            <td>{{test.testMethod}}</td>
-                            <td>{{test.test_type.get_type}}</td>
-                        </tr>
-                        {% endfor %}
-                    </table>
-                    {% else %}
-                        <h3>No Tests were created! </h3>
-                    {% endif %}
+            <div class="form-container">
+                <div class="formcol">
+                    <div class="formcol-content">
+                        <h4>Total tests available</h4>
+                        {% if tests %}
+                        <table class="table table-borderless">
+                            <tr>
+                                <th>Test Name</th>
+                                <th>Test Code</th>
+                                <th>Method</th>
+                                <th>Test Type</th>
+                                <th></th>
+                            </tr>
+                            {% for test in tests %}
+                            <tr>
+                                <td>{{test.test_name}}</td>
+                                <td>{{test.test_code}}</td>
+                                <td>{{test.testMethod}}</td>
+                                <td>{{test.get_type}}</td>
+                                {% if test.active == True%}
+                                <td><a href="{% url 'deactivate_test' test_id=test.id %}">Deactivate test</a></td>
+                                {% else %}
+                                <td><a href="{% url 'activate_test' test_id=test.id %}">Activate test</a></td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </table>
+                        {% else %}
+                            <h3>No Tests were created! </h3>
+                        {% endif %}
+                    </div>
                 </div>
                 <div class="formcol">
-                    <h1>Add new Test Methods for Analysis</h1>
-                    <form class="displayform" action="{% url 'add_test'%}" method="POST" >
-                        {% csrf_token %}
-                        <table>
-                            {{ form.as_table }}
-                        </table>
-                        <input class="displayform-submit" type="submit" value="Add Test Method">
-                    </form>
+                    <h4>Add new Test Methods for Analysis</h4>
+                    <div class="formcol-form">
+                        <form class="displayform" action="{% url 'add_test'%}" method="POST" >
+                            {% csrf_token %}
+                            {% bootstrap_form form %}
+                            {% buttons %}
+                                <button class="btn btn-primary" type="submit">Add Test Method</button>
+                            {% endbuttons %}
+                        </form>
+                    </div>
                 </div>
             </div>
 {% endblock content %}

@@ -1,13 +1,11 @@
 {% extends "base.html" %}
-{% load static %}
-<link rel="stylesheet" href="{% static 'index/style.css' %}">
+
 
 {% block content%}
     <div class="project-list">
         {% if project %}
         <h3>All Currently Active Projects</h3>
-            {% for projects in project %}
-            <table>
+            <table class="table table-hover table-borderless">
                 <tr>
                     <th>Project Name</th>
                     <th>Project PO</th>
@@ -17,22 +15,24 @@
                     <th>Status</th>
                     <th></th>
                 </tr>
+                {% for projects in project %}
                 <tr>
                     <td><a href="{% url 'view_project' projects.id %}">{{projects.project_name}}</a></td>
                     <td>{{projects.project_po}}</td>
                     <td>{{projects.date_submitted}}</td>
                     <td>{{projects.get_samplecount}}</td>
-                    
                     <td>{{projects.company}}</td>
                     <td>{{projects.get_status}}</td>
+                    
                     {% if projects.project_status == 1 %}
                         <td><a href="{% url 'delete_project' projects.id %}">Delete Project</a></td>
                     {% else %}
                         <td><a href="{% url 'cancel_project' projects.id %}">Cancel Project</a></td>
                     {% endif %}
                 </tr>
+                {% endfor %}
             </table>
-            {% endfor %}
+            
         {% else %}
             <h3>There are currently no active projects. Please create a project to continue.</h3>
         {% endif %}

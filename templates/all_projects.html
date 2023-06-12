@@ -3,11 +3,25 @@
 <link rel="stylesheet" href="{% static 'index/style.css' %}">
 
 {% block content%}
-    <div class="project-list">
+    <div>
+        <h3> {{company.company_name}} Project List</h3>
         {% if project %}
+        <table class="table table-borderless table-hover project-list">
+            <tr>
+                <th>Project Name</th>
+                <th>Project Status</th>
+                <th>Date Created</th>
+                <th>Current Sample Count</th>
+            </tr>
             {% for projects in project %}
-                <li><a href="{% url 'view_project' projects.id %}"> {{projects.project_name}}</a></li>
+            <tr>
+                <td><a href="{% url 'view_project' projects.id %}"> {{projects.project_name}}</a></td>
+                <td>{{projects.get_status}}</td>
+                <td>{{projects.date_submitted}}</td>
+                <td>{{projects.get_samplecount}}</td>
+            </tr>
             {% endfor %}
+        </table>
         {% else %}
             <h3>There are no projects. Please create a project to start.</h3>
         {% endif %}
