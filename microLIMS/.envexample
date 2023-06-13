@@ -1,0 +1,6 @@
+SECRET_KEY = 
+db_name=
+db_pass=
+db_host=
+DEBUG=1
+DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
