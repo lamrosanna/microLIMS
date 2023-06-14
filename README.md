@@ -2,7 +2,7 @@
 
 (Micro Laboratory Information System)
 
-a CRUD app that implements a light-weight project management system for sample logging, testing, and reporting with user authentication and authorization. Functions and usage are from perspective of a testing laboratory(no client portal). This means the lab is responsible for logging, tracking, and managing tests. Inspired by my experience of a LIMS :woman_scientist:
+a Django CRUD app that implements a light-weight project management system for sample logging, testing, and reporting with user authentication and authorization. Functions and usage are from perspective of a testing laboratory(no client portal). This means the lab is responsible for logging, tracking, and managing tests. Inspired by my experience of a LIMS :woman_scientist:
 
 ## Installation
 
